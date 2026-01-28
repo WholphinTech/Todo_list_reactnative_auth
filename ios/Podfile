@@ -5,7 +5,9 @@ require Pod::Executable.execute_command('node', ['-p',
     {paths: [process.argv[1]]},
   )', __dir__]).strip
 
-platform :ios, min_ios_version_supported
+require File.join(File.dirname(`node --print "require.resolve('expo/package.json')"`), "scripts/autolinking")
+
+platform :ios, '13.4'
 prepare_react_native_project!
 
 # If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
@@ -26,6 +28,7 @@ if linkage != nil
 end
 
 target 'SecuredTodoApp' do
+  use_expo_modules!
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -58,5 +61,8 @@ target 'SecuredTodoApp' do
       :mac_catalyst_enabled => false
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
+
+    # Expo modules post-install hook
+    expo_patch_react_imports!(installer)
   end
 end
