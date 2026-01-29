@@ -1,35 +1,46 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 export default StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 12,
-    marginHorizontal: 16,
+    padding: 16,
     marginVertical: 6,
-    borderRadius: 8,
-    backgroundColor: '#f0f0f0',
+    borderRadius: 14,
+    backgroundColor: '#fff',
     alignItems: 'flex-start',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.08,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
   },
   textContainer: {
     flex: 1,
-    marginRight: 10,
+    marginRight: 12,
   },
   title: {
-    fontWeight: '600',
+    fontWeight: '700',
     fontSize: 17,
-    color: '#111',
-    marginBottom: 2,
+    color: '#1a1a1a',
+    marginBottom: 4,
   },
   description: {
-    fontSize: 13,
-    color: '#888',
+    fontSize: 14,
+    color: '#8e8e93',
+    lineHeight: 20,
   },
   actions: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   iconButton: {
-    marginLeft: 12,
+    marginLeft: 8,
   },
 });
