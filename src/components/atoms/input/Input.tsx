@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import {TextInput, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import styles from './Input.styles';
 
 type InputProps = {
@@ -29,8 +29,8 @@ const Input: React.FC<InputProps> = ({
     <TextInput
       style={[
         styles.input,
-        { width, height: height || (multiline ? numberOfLines * 24 : 40) }, // auto height for multiline
-        multiline && { textAlignVertical: 'top' }, // align text at top for multiline
+        {width, height: height || (multiline ? numberOfLines * 24 : 40)}, // auto height for multiline
+        multiline && styles.multilineInput,
         inputStyle,
         style,
       ]}

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View} from 'react-native';
 import Button from '../../atoms/button/Button';
 import Input from '../../atoms/input/Input';
-import { Todo } from '../../../redux/slices/todoSlice';
+import {Todo} from '../../../redux/slices/todoSlice';
 import styles from './TodoForm.styles';
 
 type TodoFormProps = {
@@ -11,7 +11,7 @@ type TodoFormProps = {
   onCancel?: () => void; // optional for edit
 };
 
-const TodoForm: React.FC<TodoFormProps> = ({ todo, onSubmit, onCancel }) => {
+const TodoForm: React.FC<TodoFormProps> = ({todo, onSubmit, onCancel}) => {
   const [title, setTitle] = useState(todo?.title || '');
   const [description, setDescription] = useState(todo?.description || '');
 

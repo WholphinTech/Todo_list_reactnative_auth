@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, {ReactNode} from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -8,7 +8,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import styles, { sizeStyles, variantStyles } from './Button.styles';
+import styles, {sizeStyles, variantStyles} from './Button.styles';
 
 type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'disabled';
 
@@ -52,8 +52,7 @@ const Button: React.FC<ButtonProps> = ({
         style,
       ]}
       onPress={onPress}
-      disabled={variant === 'disabled'}
-    >
+      disabled={variant === 'disabled'}>
       <View style={styles.content}>
         {iconLeft && <View style={styles.icon}>{iconLeft}</View>}
         {children ? (
@@ -62,10 +61,9 @@ const Button: React.FC<ButtonProps> = ({
           <Text
             style={[
               styles.text,
-              { color: currentVariant.color, fontSize: currentSize.fontSize },
+              {color: currentVariant.color, fontSize: currentSize.fontSize},
               textStyle,
-            ]}
-          >
+            ]}>
             {title}
           </Text>
         )}

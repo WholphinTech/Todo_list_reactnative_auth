@@ -1,17 +1,17 @@
 import React from 'react';
-import { FlatList, View, Text } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import {FlatList, View, Text} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
-import TodoItem from '../../molecules/todoItem/TodoItem';
+import TodoItem from '../../../../components/molecules/todoItem/TodoItem';
 import styles from './TodoList.styles';
-import { AppDispatch, RootState } from '../../../redux/store';
-import { deleteTodoWithAuth } from '../../../redux/slices/todoSlice';
+import {AppDispatch, RootState} from '../../../../redux/store';
+import {deleteTodoWithAuth} from '../../../../redux/slices/todoSlice';
 
 type Props = {
   onEdit: (todo: any) => void;
 };
 
-const TodoList: React.FC<Props> = ({ onEdit }) => {
+const TodoList: React.FC<Props> = ({onEdit}) => {
   const todos = useSelector((state: RootState) => state.todo.todos);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -28,8 +28,8 @@ const TodoList: React.FC<Props> = ({ onEdit }) => {
   return (
     <FlatList
       data={todos}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
+      keyExtractor={item => item.id}
+      renderItem={({item}) => (
         <TodoItem
           title={item.title}
           description={item.description}

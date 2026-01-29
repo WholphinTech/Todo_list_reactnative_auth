@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   input: {
@@ -9,7 +9,8 @@ export default StyleSheet.create({
     paddingHorizontal: 12,
     fontSize: 16,
     color: '#000',
-
-  
+  },
+  multilineInput: {
+    textAlignVertical: 'top',
   },
 });

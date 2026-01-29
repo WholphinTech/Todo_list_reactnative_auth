@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
 import todoReducer, {
   addTodo,
   updateTodo,
@@ -15,7 +15,7 @@ const mockAuth = auth as jest.Mocked<typeof auth>;
 
 const createTestStore = () =>
   configureStore({
-    reducer: { todo: todoReducer },
+    reducer: {todo: todoReducer},
   });
 
 describe('todoSlice', () => {
@@ -26,7 +26,7 @@ describe('todoSlice', () => {
   describe('sync reducers', () => {
     it('addTodo adds a new todo', () => {
       const store = createTestStore();
-      store.dispatch(addTodo({ title: 'Test', description: 'Desc' }));
+      store.dispatch(addTodo({title: 'Test', description: 'Desc'}));
 
       const todos = store.getState().todo.todos;
       expect(todos).toHaveLength(1);
@@ -36,10 +36,10 @@ describe('todoSlice', () => {
 
     it('updateTodo updates existing todo', () => {
       const store = createTestStore();
-      store.dispatch(addTodo({ title: 'Old', description: 'Old Desc' }));
+      store.dispatch(addTodo({title: 'Old', description: 'Old Desc'}));
 
       const id = store.getState().todo.todos[0].id;
-      store.dispatch(updateTodo({ id, title: 'New', description: 'New Desc' }));
+      store.dispatch(updateTodo({id, title: 'New', description: 'New Desc'}));
 
       const todo = store.getState().todo.todos[0];
       expect(todo.title).toBe('New');
@@ -48,7 +48,7 @@ describe('todoSlice', () => {
 
     it('deleteTodo removes todo', () => {
       const store = createTestStore();
-      store.dispatch(addTodo({ title: 'Test', description: 'Desc' }));
+      store.dispatch(addTodo({title: 'Test', description: 'Desc'}));
 
       const id = store.getState().todo.todos[0].id;
       store.dispatch(deleteTodo(id));
@@ -62,7 +62,9 @@ describe('todoSlice', () => {
       mockAuth.authenticateUser.mockResolvedValue(true);
       const store = createTestStore();
 
-      await store.dispatch(addTodoWithAuth({ title: 'Auth Test', description: 'Desc' }));
+      await store.dispatch(
+        addTodoWithAuth({title: 'Auth Test', description: 'Desc'}),
+      );
 
       expect(store.getState().todo.todos).toHaveLength(1);
       expect(mockAuth.authenticateUser).toHaveBeenCalledTimes(1);
@@ -72,7 +74,9 @@ describe('todoSlice', () => {
       mockAuth.authenticateUser.mockResolvedValue(false);
       const store = createTestStore();
 
-      const result = await store.dispatch(addTodoWithAuth({ title: 'Test', description: 'Desc' }));
+      const result = await store.dispatch(
+        addTodoWithAuth({title: 'Test', description: 'Desc'}),
+      );
 
       expect(result.type).toBe('todo/addWithAuth/rejected');
       expect(store.getState().todo.todos).toHaveLength(0);
@@ -80,7 +84,7 @@ describe('todoSlice', () => {
 
     it('deleteTodoWithAuth deletes when auth succeeds', async () => {
       const store = createTestStore();
-      store.dispatch(addTodo({ title: 'Test', description: 'Desc' }));
+      store.dispatch(addTodo({title: 'Test', description: 'Desc'}));
       const id = store.getState().todo.todos[0].id;
 
       mockAuth.authenticateUser.mockResolvedValue(true);
@@ -91,7 +95,7 @@ describe('todoSlice', () => {
 
     it('deleteTodoWithAuth rejects when auth fails', async () => {
       const store = createTestStore();
-      store.dispatch(addTodo({ title: 'Test', description: 'Desc' }));
+      store.dispatch(addTodo({title: 'Test', description: 'Desc'}));
       const id = store.getState().todo.todos[0].id;
 
       mockAuth.authenticateUser.mockResolvedValue(false);
@@ -103,11 +107,13 @@ describe('todoSlice', () => {
 
     it('updateTodoWithAuth updates when auth succeeds', async () => {
       const store = createTestStore();
-      store.dispatch(addTodo({ title: 'Old', description: 'Old Desc' }));
+      store.dispatch(addTodo({title: 'Old', description: 'Old Desc'}));
       const id = store.getState().todo.todos[0].id;
 
       mockAuth.authenticateUser.mockResolvedValue(true);
-      await store.dispatch(updateTodoWithAuth({ id, title: 'New', description: 'New Desc' }));
+      await store.dispatch(
+        updateTodoWithAuth({id, title: 'New', description: 'New Desc'}),
+      );
 
       expect(store.getState().todo.todos[0].title).toBe('New');
     });
@@ -122,7 +128,9 @@ describe('todoSlice', () => {
       expect(store.getState().todo.isUnlocked).toBe(false);
 
       mockAuth.authenticateUser.mockResolvedValue(true);
-      const result = await store.dispatch(addTodoWithAuth({ title: 'Test', description: 'Desc' }));
+      const result = await store.dispatch(
+        addTodoWithAuth({title: 'Test', description: 'Desc'}),
+      );
 
       // Action succeeded
       expect(result.type).toBe('todo/addWithAuth/fulfilled');
@@ -133,7 +141,9 @@ describe('todoSlice', () => {
 
       // Subsequent action should NOT call authenticateUser again
       mockAuth.authenticateUser.mockClear();
-      await store.dispatch(addTodoWithAuth({ title: 'Second', description: 'Desc2' }));
+      await store.dispatch(
+        addTodoWithAuth({title: 'Second', description: 'Desc2'}),
+      );
 
       expect(mockAuth.authenticateUser).not.toHaveBeenCalled();
       expect(store.getState().todo.todos).toHaveLength(2);
@@ -146,7 +156,9 @@ describe('todoSlice', () => {
       expect(store.getState().todo.isUnlocked).toBe(false);
 
       mockAuth.authenticateUser.mockResolvedValue(false);
-      const result = await store.dispatch(addTodoWithAuth({ title: 'Test', description: 'Desc' }));
+      const result = await store.dispatch(
+        addTodoWithAuth({title: 'Test', description: 'Desc'}),
+      );
 
       // Action was rejected
       expect(result.type).toBe('todo/addWithAuth/rejected');

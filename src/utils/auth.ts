@@ -1,5 +1,5 @@
 import * as LocalAuthentication from 'expo-local-authentication';
-import { Alert, Platform, Linking } from 'react-native';
+import {Alert, Platform, Linking} from 'react-native';
 
 /**
  * Opens device security settings
@@ -35,14 +35,14 @@ export const authenticateUser = async (): Promise<boolean> => {
     }
 
     if (!isEnrolled) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         Alert.alert(
           'Biometrics Not Enrolled',
           Platform.OS === 'android'
             ? 'Please enroll fingerprint to continue'
             : 'Please enroll Face ID/Touch ID to continue',
           [
-            { text: 'Cancel', style: 'cancel', onPress: () => resolve(false) },
+            {text: 'Cancel', style: 'cancel', onPress: () => resolve(false)},
             {
               text: 'Open Settings',
               onPress: () => {
@@ -50,7 +50,7 @@ export const authenticateUser = async (): Promise<boolean> => {
                 resolve(false);
               },
             },
-          ]
+          ],
         );
       });
     }

@@ -1,13 +1,15 @@
 import * as LocalAuthentication from 'expo-local-authentication';
-import { authenticateUser, isBiometricAvailable } from '../src/utils/auth';
+import {authenticateUser, isBiometricAvailable} from '../src/utils/auth';
 
 jest.mock('expo-local-authentication');
 jest.mock('react-native', () => ({
-  Alert: { alert: jest.fn() },
-  Platform: { OS: 'android' },
+  Alert: {alert: jest.fn()},
+  Platform: {OS: 'android'},
 }));
 
-const mockLocalAuth = LocalAuthentication as jest.Mocked<typeof LocalAuthentication>;
+const mockLocalAuth = LocalAuthentication as jest.Mocked<
+  typeof LocalAuthentication
+>;
 
 describe('auth utils', () => {
   beforeEach(() => {
@@ -45,7 +47,7 @@ describe('auth utils', () => {
       mockLocalAuth.hasHardwareAsync.mockResolvedValue(true);
       mockLocalAuth.isEnrolledAsync.mockResolvedValue(true);
       mockLocalAuth.supportedAuthenticationTypesAsync.mockResolvedValue([1]);
-      mockLocalAuth.authenticateAsync.mockResolvedValue({ success: true });
+      mockLocalAuth.authenticateAsync.mockResolvedValue({success: true});
 
       const result = await authenticateUser();
       expect(result).toBe(true);

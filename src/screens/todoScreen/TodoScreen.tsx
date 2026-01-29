@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
-import { View, Modal } from 'react-native';
-import { useDispatch } from 'react-redux';
+import React, {useState} from 'react';
+import {View, Modal} from 'react-native';
+import {useDispatch} from 'react-redux';
 
-import Button from '../../atoms/button/Button';
-import TodoForm from '../../molecules/todoForm/TodoForm';
-import TodoList from '../todoList/TodoList';
-import { AppDispatch } from '../../../redux/store';
-import { addTodoWithAuth, updateTodoWithAuth, Todo } from '../../../redux/slices/todoSlice';
+import Button from '../../components/atoms/button/Button';
+import TodoForm from '../../components/molecules/todoForm/TodoForm';
+import TodoList from './components/TodoList/TodoList';
+import {AppDispatch} from '../../redux/store';
+import {
+  addTodoWithAuth,
+  updateTodoWithAuth,
+  Todo,
+} from '../../redux/slices/todoSlice';
 import styles from './TodoScreen.styles';
 
 const TodoScreen: React.FC = () => {
@@ -16,7 +20,7 @@ const TodoScreen: React.FC = () => {
 
   // Handle adding new todo (auth in thunk)
   const handleAddTodo = async (title: string, description: string) => {
-    const result = await dispatch(addTodoWithAuth({ title, description }));
+    const result = await dispatch(addTodoWithAuth({title, description}));
     if (addTodoWithAuth.fulfilled.match(result)) {
       setModalVisible(false);
     }
@@ -24,8 +28,12 @@ const TodoScreen: React.FC = () => {
 
   // Handle updating existing todo (auth in thunk)
   const handleUpdateTodo = async (title: string, description: string) => {
-    if (!editingTodo) return;
-    const result = await dispatch(updateTodoWithAuth({ id: editingTodo.id, title, description }));
+    if (!editingTodo) {
+      return;
+    }
+    const result = await dispatch(
+      updateTodoWithAuth({id: editingTodo.id, title, description}),
+    );
     if (updateTodoWithAuth.fulfilled.match(result)) {
       setEditingTodo(null);
       setModalVisible(false);
@@ -40,10 +48,13 @@ const TodoScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Button title="Add New Todo" onPress={() => {
-        setEditingTodo(null);
-        setModalVisible(true);
-      }} />
+      <Button
+        title="Add New Todo"
+        onPress={() => {
+          setEditingTodo(null);
+          setModalVisible(true);
+        }}
+      />
       <TodoList onEdit={openEditModal} />
       <Modal visible={modalVisible} animationType="slide" transparent>
         <View style={styles.modalBackground}>
