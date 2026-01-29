@@ -17,12 +17,13 @@ export default StyleSheet.create({
   },
   title: {
     fontWeight: '600',
-    fontSize: 16,
+    fontSize: 17,
+    color: '#111',
     marginBottom: 2,
   },
   description: {
-    fontSize: 14,
-    color: '#555',
+    fontSize: 13,
+    color: '#888',
   },
   actions: {
     flexDirection: 'row',

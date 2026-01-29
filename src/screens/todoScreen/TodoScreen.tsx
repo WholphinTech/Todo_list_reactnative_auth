@@ -49,7 +49,7 @@ const TodoScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <Button
-        title="Add New Todo"
+        title="+ Add Todo"
         onPress={() => {
           setEditingTodo(null);
           setModalVisible(true);

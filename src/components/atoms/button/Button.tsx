@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import styles, {sizeStyles, variantStyles} from './Button.styles';
 
-type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'disabled';
+type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'dangerText' | 'disabled';
 
 type ButtonProps = {
   title?: string;

@@ -30,7 +30,7 @@ const TodoItem: React.FC<Props> = ({title, description, onDelete, onEdit}) => {
 
         {/* Delete Icon */}
         <Button
-          variant="danger"
+          variant="dangerText"
           onPress={onDelete}
           title="Remove"
           style={styles.iconButton}

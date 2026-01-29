@@ -19,6 +19,12 @@ export const variantStyles = {
     borderWidth: 0,
     borderColor: 'transparent',
   },
+  dangerText: {
+    backgroundColor: 'transparent',
+    color: '#dc3545',
+    borderWidth: 0,
+    borderColor: 'transparent',
+  },
   disabled: {
     backgroundColor: '#ccc',
     color: '#666',

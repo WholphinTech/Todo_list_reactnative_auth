@@ -20,7 +20,7 @@ const TodoList: React.FC<Props> = ({onEdit}) => {
   if (todos.length === 0) {
     return (
       <View style={styles.emptyContainer}>
-        <Text style={styles.emptyText}>No todos added yet!</Text>
+        <Text style={styles.emptyText}>No todos yet</Text>
       </View>
     );
   }
