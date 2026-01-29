@@ -6,7 +6,7 @@ import { Todo } from '../../../redux/slices/todoSlice';
 import styles from './TodoForm.styles';
 
 type TodoFormProps = {
-  onSubmit: (title: string, description: string) => void;
+  onSubmit: (title: string, description: string) => Promise<void> | void;
   todo?: Todo; // optional, if passed → edit mode
   onCancel?: () => void; // optional for edit
 };
@@ -22,10 +22,8 @@ const TodoForm: React.FC<TodoFormProps> = ({ todo, onSubmit, onCancel }) => {
     }
   }, [todo]);
 
-  const handleSubmit = () => {
-    onSubmit(title, description);
-    setTitle('');
-    setDescription('');
+  const handleSubmit = async () => {
+    await onSubmit(title, description);
   };
 
   return (

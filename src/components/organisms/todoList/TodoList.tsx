@@ -5,17 +5,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import TodoItem from '../../molecules/todoItem/TodoItem';
 import styles from './TodoList.styles';
 import { AppDispatch, RootState } from '../../../redux/store';
-import { deleteTodo } from '../../../redux/slices/todoSlice';
+import { deleteTodoWithAuth } from '../../../redux/slices/todoSlice';
 
 type Props = {
-  onEdit: (todo: any) => void; // function to open edit modal
+  onEdit: (todo: any) => void;
 };
 
 const TodoList: React.FC<Props> = ({ onEdit }) => {
   const todos = useSelector((state: RootState) => state.todo.todos);
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleDelete = (id: string) => dispatch(deleteTodo(id));
+  const handleDelete = (id: string) => dispatch(deleteTodoWithAuth(id));
 
   if (todos.length === 0) {
     return (
@@ -28,7 +28,7 @@ const TodoList: React.FC<Props> = ({ onEdit }) => {
   return (
     <FlatList
       data={todos}
-      keyExtractor={item => item.id}
+      keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <TodoItem
           title={item.title}

@@ -6,30 +6,30 @@ import Button from '../../atoms/button/Button';
 import TodoForm from '../../molecules/todoForm/TodoForm';
 import TodoList from '../todoList/TodoList';
 import { AppDispatch } from '../../../redux/store';
-import { addTodo, updateTodo, Todo } from '../../../redux/slices/todoSlice';
+import { addTodoWithAuth, updateTodoWithAuth, Todo } from '../../../redux/slices/todoSlice';
 import styles from './TodoScreen.styles';
-import { authenticateUser } from '../../../utils/auth';
 
 const TodoScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
   const dispatch = useDispatch<AppDispatch>();
 
-  // Handle adding new todo
+  // Handle adding new todo (auth in thunk)
   const handleAddTodo = async (title: string, description: string) => {
-    const auth = await authenticateUser();
-    if (!auth) return; // user canceled or failed auth
-    
-    dispatch(addTodo({ title, description }));
-    setModalVisible(false);
+    const result = await dispatch(addTodoWithAuth({ title, description }));
+    if (addTodoWithAuth.fulfilled.match(result)) {
+      setModalVisible(false);
+    }
   };
 
-  // Handle updating existing todo
-  const handleUpdateTodo = (title: string, description: string) => {
+  // Handle updating existing todo (auth in thunk)
+  const handleUpdateTodo = async (title: string, description: string) => {
     if (!editingTodo) return;
-    dispatch(updateTodo({ id: editingTodo.id, title, description }));
-    setEditingTodo(null);
-    setModalVisible(false);
+    const result = await dispatch(updateTodoWithAuth({ id: editingTodo.id, title, description }));
+    if (updateTodoWithAuth.fulfilled.match(result)) {
+      setEditingTodo(null);
+      setModalVisible(false);
+    }
   };
 
   // Open modal for editing
@@ -40,17 +40,16 @@ const TodoScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {/* Add New Todo Button */}
-      <Button title="Add New Todo" onPress={() => setModalVisible(true)} />
-
-      {/* Todo list */}
+      <Button title="Add New Todo" onPress={() => {
+        setEditingTodo(null);
+        setModalVisible(true);
+      }} />
       <TodoList onEdit={openEditModal} />
-
-      {/* Modal for Add/Edit */}
       <Modal visible={modalVisible} animationType="slide" transparent>
         <View style={styles.modalBackground}>
           <View style={styles.modalContent}>
             <TodoForm
+              key={editingTodo?.id ?? 'new'}
               todo={editingTodo ?? undefined}
               onSubmit={editingTodo ? handleUpdateTodo : handleAddTodo}
               onCancel={() => {
