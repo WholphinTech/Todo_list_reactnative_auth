@@ -3,8 +3,16 @@ import {authenticateUser, isBiometricAvailable} from '../src/utils/auth';
 
 jest.mock('expo-local-authentication');
 jest.mock('react-native', () => ({
-  Alert: {alert: jest.fn()},
+  Alert: {
+    alert: jest.fn((_title, _message, buttons) => {
+      // Simulate user pressing "Cancel" (first button) for enrollment prompt
+      if (buttons && buttons[0]?.onPress) {
+        buttons[0].onPress();
+      }
+    }),
+  },
   Platform: {OS: 'android'},
+  Linking: {sendIntent: jest.fn()},
 }));
 
 const mockLocalAuth = LocalAuthentication as jest.Mocked<
